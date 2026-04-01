@@ -1,7 +1,7 @@
 ## 1. Deployment vs StatefulSet
 **Question:** What's the difference between Deployment and StatefulSet?
 
-**Answer:** Deployment is used for stateless applications where pods are
+Deployment is used for stateless applications where pods are
 interchangeable and can scale freely. StatefulSet is used for stateful
 applications where each pod requires a stable identity, persistent
 storage, and ordered deployment.
