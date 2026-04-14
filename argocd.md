@@ -320,3 +320,246 @@ TLS
 
 👉 CI (like Jenkins) updates Git → Argo CD deploys
 ```
+
+
+1. Your application is OutOfSync in Argo CD, but no changes were made in Git. Why?
+```
+Answer:
+
+Manual changes done in cluster (kubectl edit)
+ConfigMap/Secret updated dynamically
+Helm values drift
+Auto-sync disabled
+
+👉 Fix:
+
+Enable self-heal OR revert manual changes
+```
+❓ 2. Argo CD is not detecting changes from Git. What will you check?
+```
+Answer:
+
+Repo connectivity (SSH/HTTPS)
+Repo server logs
+Webhook configuration
+Git branch/path mismatch
+Cache issue (repo-server)
+```
+❓ 3. Sync is failing. How do you debug?
+```
+Answer:
+
+Check application events
+Check controller logs
+Validate YAML
+Check RBAC permissions
+Run:
+argocd app logs <app-name>
+```
+❓ 4. You deleted a resource from Git but it's still running in cluster. Why?
+```
+Answer:
+👉 Prune not enabled
+
+Fix:
+
+syncPolicy:
+  automated:
+    prune: true
+```
+❓ 5. Someone manually changed replicas in Kubernetes. What happens?
+```
+Answer:
+
+Argo CD detects drift
+If self-heal ON → revert to Git state
+If OFF → stays OutOfSync
+```
+❓ 6. How do you promote application from dev → prod?
+```
+Answer:
+
+Use different branches OR folders
+Update image tag in Git
+Argo CD syncs automatically
+```
+❓ 7. How do you handle secrets in Argo CD?
+```
+Answer:
+Use:
+
+Sealed Secrets
+HashiCorp Vault
+
+Never store plain secrets in Git ❌
+```
+❓ 8. Argo CD UI is not accessible. What will you check?
+```
+Answer:
+
+Service type (ClusterIP/NodePort/Ingress)
+Port-forward
+Pod status
+Network policies
+```
+❓ 9. App is in “Degraded” state. What does it mean?
+```
+Answer:
+
+Resource not healthy
+Pod crash / readiness probe failed
+```
+❓ 10. How do you rollback deployment in Argo CD?
+```
+Answer:
+
+Rollback to previous Git commit
+Or use UI → History → Rollback
+🔥 2. Troubleshooting Questions (Most Asked)
+```
+❓ 11. Difference between Sync Failed vs Degraded?
+```
+Sync Failed → deployment failed
+Degraded → deployed but unhealthy
+```
+❓ 12. Argo CD showing Unknown status?
+```
+Answer:
+
+API server issue
+Cluster connectivity problem
+```
+❓ 13. Pods in CrashLoopBackOff after sync. What will you do?
+```
+Answer:
+
+Check logs
+Check image/tag
+Check env variables
+```
+❓ 14. Argo CD is slow in syncing. Why?
+```
+Answer:
+
+Large repo
+Too many apps
+Repo-server bottleneck
+No caching optimization
+```
+❓ 15. How do you scale Argo CD?
+```
+Answer:
+
+Increase replicas of:
+application-controller
+repo-server
+🔥 3. Architecture-Level Questions
+```
+❓ 16. Explain Argo CD architecture in interview
+```
+Answer:
+
+API Server (UI/CLI)
+Repo Server (Git fetch)
+Application Controller (reconciliation)
+Redis (cache)
+
+👉 Always mention reconciliation loop
+```
+❓ 17. What is reconciliation loop?
+```
+Answer:
+Continuously compares:
+👉 Desired state (Git) vs Live state (Cluster)
+```
+❓ 18. Why Argo CD is called pull-based?
+```
+Answer:
+👉 It pulls changes from Git instead of pushing from CI
+```
+❓ 19. How Argo CD integrates with CI tools?
+```
+Answer:
+CI tools like Jenkins:
+
+Build image
+Update Git
+Argo CD deploys
+```
+❓ 20. How do you manage multiple clusters?
+```
+Answer:
+
+Add clusters in Argo CD
+Use contexts
+Use ApplicationSet
+```
+❓ 21. How do you deploy 100+ applications using Argo CD?
+```
+Answer:
+👉 Use ApplicationSet with generators
+```
+❓ 22. How do you ensure zero downtime deployments?
+```
+Answer:
+
+Rolling updates
+Health checks
+Sync waves
+```
+❓ 23. What is Sync Wave? Real use case?
+```
+Answer:
+
+Deploy DB first → backend → frontend
+```
+❓ 24. Can Argo CD replace Jenkins?
+```
+Answer:
+❌ No
+👉 Jenkins = CI
+👉 Argo CD = CD
+```
+❓ 25. How do you secure Argo CD?
+```
+Answer:
+
+RBAC
+SSO
+TLS
+Private repo access
+```
+❓ 26. What happens if Git repo is down?
+```
+Answer:
+
+No new deployments
+Existing apps keep running
+```
+❓ 27. Can Argo CD work without Git?
+```
+Answer:
+❌ No (Git is mandatory source of truth)
+```
+❓ 28. What is difference between Helm vs Argo CD?
+```
+Answer:
+
+Helm → templating
+Argo CD → deployment
+```
+❓ 29. How do you debug repo-server issues?
+```
+Answer:
+
+Check repo-server logs
+Test Git access manually\
+```
+❓ 30. What is biggest limitation of Argo CD?
+```
+Answer:
+
+Not a CI tool
+Git dependency
+Complex setup at scale
+```
