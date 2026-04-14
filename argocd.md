@@ -15,25 +15,26 @@ Argo CD detects change and syncs
 Deploy to K8s
 Application deployed to Kubernetes cluster
 ```
-🔹 1. What is Argo CD?
+#### 1. What is Argo CD?
 
-Answer:
+```Answer:
 Argo CD is a GitOps-based continuous delivery tool for Kubernetes.
 It syncs application state from Git repository to Kubernetes cluster automatically.
 
 👉 Git = source of truth
 👉 Argo CD = ensures cluster matches Git
-
-🔹 2. What is GitOps?
-
+```
+#### 2. What is GitOps?
+```
 Answer:
 GitOps is a practice where:
 
 Git stores desired infrastructure & app configs
 Changes happen via pull requests
 Tools like Argo CD apply them to cluster
-🔹 3. Argo CD Architecture
-
+```
+#### 3. Argo CD Architecture
+```
 Main Components:
 
 API Server – UI, CLI, REST
@@ -42,9 +43,9 @@ Application Controller – compares desired vs live state
 Redis – caching
 
 👉 Interview Tip: Always mention reconciliation loop
-
+```
 🔹 4. What is an Application in Argo CD?
-
+```
 Answer:
 An Application is a custom resource (CRD) that defines:
 
@@ -52,8 +53,11 @@ Git repo
 Path
 Target cluster
 Sync policy
+```
+
 🔹 5. What is Sync in Argo CD?
 
+```
 Answer:
 Sync means applying Git state to Kubernetes cluster.
 
@@ -61,11 +65,13 @@ Types:
 
 Manual Sync
 Auto Sync
-🔹 6. Auto Sync vs Manual Sync
+```
+```🔹 6. Auto Sync vs Manual Sync
 Feature	Auto Sync	Manual Sync
 Trigger	Automatic	User
 Use case	Prod pipelines	Dev/Test
-🔹 7. What is Drift Detection?
+```
+```🔹 7. What is Drift Detection?
 
 Answer:
 Argo CD detects if cluster state ≠ Git state.
@@ -76,13 +82,13 @@ Argo CD detects if cluster state ≠ Git state.
 
 Answer:
 If enabled, Argo CD automatically restores changes if someone manually modifies cluster.
-
-🔹 9. What is Pruning?
+```
+```🔹 9. What is Pruning?
 
 Answer:
 Deletes resources that exist in cluster but not in Git.
-
-🔹 10. What is Sync Policy?
+```
+```🔹 10. What is Sync Policy?
 
 Answer:
 Defines how sync happens:
@@ -91,17 +97,19 @@ syncPolicy:
   automated:
     prune: true
     selfHeal: true
-🔹 11. What is Argo CD Rollback?
+```
+```🔹 11. What is Argo CD Rollback?
 
 Answer:
 Rollback to previous Git commit version.
-
-🔹 12. How Argo CD Works (Flow)
+```
+```🔹 12. How Argo CD Works (Flow)
 Developer pushes code → Git
 Argo CD detects change
 Compares with cluster
 Syncs automatically
-🔹 13. What is ApplicationSet?
+```
+```🔹 13. What is ApplicationSet?
 
 Answer:
 Used to manage multiple applications dynamically.
@@ -110,30 +118,35 @@ Used to manage multiple applications dynamically.
 
 Multi-cluster deployment
 Multi-environment (dev, qa, prod)
-🔹 14. What is Helm in Argo CD?
+```
+```🔹 14. What is Helm in Argo CD?
 
 Answer:
 Argo CD supports Helm charts for templating.
 
 👉 You can deploy Helm charts directly from Git.
-
-🔹 15. What is Kustomize?
+```
+```🔹 15. What is Kustomize?
 
 Answer:
 A Kubernetes-native configuration management tool supported by Argo CD.
-
-🔹 16. Difference: Argo CD vs Jenkins
+```
+```🔹 16. Difference: Argo CD vs Jenkins
 Feature	Argo CD	Jenkins
 Type	CD Tool	CI/CD
 Approach	GitOps	Pipeline
 Deployment	Pull-based	Push-based
-🔹 17. Argo CD Ports
+```
+```🔹 17. Argo CD Ports
 UI/API Server → 443 / 80 (default via ingress)
 Internal communication → cluster-based
-🔹 18. How to Access Argo CD UI?
+```
+```🔹 18. How to Access Argo CD UI?
 kubectl port-forward svc/argocd-server -n argocd 8080:443
-🔹 19. How to Login Argo CD CLI?
+```
+```🔹 19. How to Login Argo CD CLI?
 argocd login <server>
+```
 🔹 20. What is Argo CD Sync Status?
 Synced
 OutOfSync
