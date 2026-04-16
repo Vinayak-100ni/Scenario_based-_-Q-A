@@ -1,3 +1,87 @@
+# Kubernetes 503 Service Unavailable Error
+
+## 📌 What is 503 Error?
+A **503 Service Unavailable** error in Kubernetes means:
+> The request reached the cluster, but no backend pod is available to handle it.
+
+---
+
+## 🧠 Architecture Flow
+Client → Ingress → Service → Pods
+
+
+**503 occurs when:**
+- Service has **no healthy/ready pods**
+
+---
+
+## 🔍 Common Causes
+
+### 1. No Running or Ready Pods
+- Pods are in:
+  - CrashLoopBackOff
+  - Pending
+  - Not Ready
+
+**Check:**
+```bash
+kubectl get pods
+kubectl get endpoints <service-name>
+```
+2. Readiness Probe Failure
+Pod is running but not marked as Ready
+Removed from service endpoints
+
+Check:
+
+kubectl describe pod <pod-name>
+
+Look for:
+
+Readiness probe failed
+3. Service Selector Mismatch
+Labels in Service do not match Pod labels
+
+Example:
+
+# Service
+selector:
+  app: my-app
+# Pod
+labels:
+  app: myapp  # ❌ mismatch
+4. Ingress Issues
+Backend service not reachable
+Wrong service name or port
+No endpoints available
+
+Check:
+
+kubectl describe ingress <name>
+kubectl get svc
+5. Port Mismatch
+Container port and Service port mismatch
+
+Check:
+
+kubectl describe svc <service-name>
+6. Application Crash / Slow Startup
+App not ready when traffic arrives
+
+Solution:
+
+Configure readinessProbe
+Use startupProbe
+7. Resource Issues (OOMKilled / CPU)
+Pod crashes due to insufficient resources
+No healthy pods left
+
+Check:
+
+kubectl describe pod <pod-name>
+
+
+
 ## 🔹 GPU in Kubernetes
 
 * GPU Node → Node with GPU hardware
