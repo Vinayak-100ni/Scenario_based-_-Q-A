@@ -44,10 +44,10 @@ Labels in Service do not match Pod labels
 
 Example:
 
-# Service
+  Service
 selector:
   app: my-app
-# Pod
+ Pod
 labels:
   app: myapp  # ❌ mismatch
 4. Ingress Issues
