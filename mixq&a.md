@@ -27,7 +27,7 @@ Client → Ingress → Service → Pods
 ```bash
 kubectl get pods
 kubectl get endpoints <service-name>
-```
+
 2. Readiness Probe Failure
 Pod is running but not marked as Ready
 Removed from service endpoints
@@ -80,7 +80,7 @@ Check:
 
 kubectl describe pod <pod-name>
 
-
+```
 
 ## 🔹 GPU in Kubernetes
 
