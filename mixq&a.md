@@ -1,3 +1,107 @@
+### is a combination of ALB vs NLB possible
+```
+“Yes, combining Application Load Balancer and Network Load Balancer is possible in AWS.
+
+Typically, we place NLB in front of ALB when we need both Layer 4 and Layer 7 capabilities.
+
+NLB provides static IPs, high performance, and handles TCP traffic, while ALB provides advanced routing like path-based and host-based routing.
+
+So the flow becomes:
+Client → NLB → ALB → backend services.
+
+This is useful in cases like PrivateLink, fixed IP requirements, or when we need both performance and intelligent routing in the same architecture.”
+```
+### what are lifecycle policies ?
+```
+Lifecycle policies are rules that automatically manage the lifecycle of resources—like moving, archiving, or deleting data—based on time or conditions.
+
+In AWS, the most common example is Amazon S3 lifecycle policies, where we can transition objects from Standard storage to cheaper classes like Glacier, or delete them after a certain number of days.”
+```
+
+### what is used for streaming and why ?
+```
+“For streaming in AWS, we commonly use Amazon Kinesis.
+
+It is used to collect, process, and analyze real-time streaming data like logs, clickstreams, or IoT data.
+
+The main reason we use it is because it can handle high-throughput, low-latency data ingestion and allows real-time processing instead of batch processing.”
+```
+### what are storage classes ? rank them based on cost ?
+```
+In Amazon S3, storage classes define different tiers of storage optimized for cost, availability, and access frequency.”
+
+💰 Storage Classes Ranked by Cost (High → Low)
+S3 Standard (most expensive)
+Frequently accessed data
+High availability, low latency
+S3 Intelligent-Tiering
+Automatically moves data between tiers
+Slight monitoring cost, but saves money if access pattern is unknown
+S3 Standard-IA (Infrequent Access)
+Lower storage cost
+Retrieval cost applies
+S3 One Zone-IA
+Cheaper than Standard-IA
+Stored in a single AZ (less resilient)
+S3 Glacier Instant Retrieval
+Archive data but still needs quick access
+S3 Glacier Flexible Retrieval
+Cheaper, but retrieval takes minutes to hours
+S3 Glacier Deep Archive (cheapest)
+Lowest cost
+Retrieval can take hours (12+)
+```
+### how does dns resolution work and where are records stored ?
+```
+DNS resolution is the process of converting a domain name into an IP address so that a client can connect to the correct server.
+
+For example, when we type a URL, DNS translates it into the server’s IP address.”
+
+🔄 Step-by-Step Flow
+
+Let’s say you enter example.com in a browser:
+
+Local cache check
+Browser / OS checks if it already knows the IP.
+Recursive resolver
+If not, the request goes to a DNS resolver (usually ISP or public DNS).
+Root server
+Resolver asks root servers: “Where is .com handled?”
+TLD server
+Root points to the .com TLD server, which responds with the authoritative server.
+Authoritative DNS server
+Final server returns the actual IP address of the domain.
+Response returned
+Resolver sends IP back to client → browser connects to server.
+📍 Where are DNS records stored?
+
+“DNS records are stored in authoritative DNS servers.
+
+In AWS, this is managed by Amazon Route 53, where we create records like A, CNAME, MX, etc.”
+
+🧠 Types of Records (mention 2–3)
+A record → maps domain to IP
+CNAME → maps one domain to another
+MX → mail server routing
+```
+### what is route 53 ?
+```
+“Amazon Route 53 is a highly available and scalable DNS (Domain Name System) service in AWS used to route user traffic to applications by translating domain names into IP addresses.”
+
+🧠 Break it into 3 core functions (interviewers like this)
+1. Domain Registration
+You can buy and manage domain names (like example.com)
+2. DNS Management
+Store DNS records (A, CNAME, MX, etc.)
+Acts as an authoritative DNS server
+3. Traffic Routing
+Routes traffic intelligently using routing policies
+⚡ Routing Policies (mention 2–3 max)
+Simple routing → single resource
+Weighted routing → split traffic (e.g., 70/30)
+Latency-based routing → lowest latency region
+Failover routing → active-passive setup
+```
 # Kubernetes 503 Service Unavailable Error
 
 ## 📌 What is 503 Error?
