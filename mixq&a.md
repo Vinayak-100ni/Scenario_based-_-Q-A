@@ -51,6 +51,15 @@ S3 Glacier Deep Archive (cheapest)
 Lowest cost
 Retrieval can take hours (12+)
 ```
+### pods not able to access s3 in eks ? how do you fix it?
+```
+If pods in Amazon EKS are not able to access Amazon S3, the most common cause is missing or incorrect IAM permissions.
+
+The recommended fix is to use IAM Roles for Service Accounts (IRSA) so that pods can securely access AWS services
+. Check IAM Permissions
+Verify IRSA iam role for serive account Configuration
+Network Check vpc endpoint connected 
+```
 ### how does dns resolution work and where are records stored ?
 ```
 DNS resolution is the process of converting a domain name into an IP address so that a client can connect to the correct server.
