@@ -403,3 +403,53 @@ Use remote backend + versioning in S3.
 Enable backend backups.
 Restrict delete permissions for production workspaces.
 ```
+
+### you have stored everythink in s3 backend so only workspace is deleted . so can we bring that state once again in a new workspace? will it work?
+```
+Yes — if you are using a remote backend like Amazon Web Services S3 and only the Terraform workspace was deleted, you can usually recover it because the state file still exists in S3.
+
+You can tell the interviewer like this:
+
+“If only the Terraform workspace is deleted but the backend state still exists in S3, I can recreate the workspace and reconnect Terraform to the existing state file. Since the actual state is stored remotely, deleting the workspace does not remove infrastructure or backend state automatically.”
+
+How recovery works:
+
+Verify the state file still exists in the S3 backend.
+
+Example path:
+env:/prod/terraform.tfstate
+Recreate the workspace:
+terraform workspace new prod
+Select the workspace:
+terraform workspace select prod
+Run:
+terraform init
+Terraform reconnects to the backend state.
+
+Important point:
+
+If the S3 state file still exists → recovery works.
+If both workspace and state file are deleted → recovery becomes difficult.
+
+For workspace-based state in remote backend, Terraform often stores state like:
+
+s3://bucket-name/env:/prod/terraform.tfstate
+```
+
+### what happens if a provider is getting upgraded ? for ex you are in an aws 7.5 provider, and that needs to be update to 7.6 it's a major version . so how do you plan for this?
+```
+When a Terraform provider upgrade is required, I never upgrade directly in production. I follow a controlled upgrade process to avoid breaking infrastructure changes.
+
+First, I review the provider release notes and changelog to identify breaking changes, deprecated resources, or argument modifications.
+
+Then I update the provider version in Terraform configuration and test it in a lower environment like dev or QA before touching production.
+
+I run terraform init -upgrade to download the new provider version and then execute terraform plan to compare infrastructure changes.
+
+If the plan shows unexpected resource recreation or schema changes, I fix compatibility issues first.
+
+After validation in non-production environments, I promote the same tested version to production through CI/CD.
+
+I also keep a backup of the Terraform state and use version pinning so rollback is possible if required.”
+```
+
