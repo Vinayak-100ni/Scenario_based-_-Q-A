@@ -335,7 +335,7 @@ depends_on = [
   - **Environment variables**
   - A DRY, hierarchical structure for multiple environments
 
-#### how you handle the state management in your env
+### how you handle the state management in your env
 ```
 In my environment, I handle Terraform state management using a remote backend to ensure collaboration, security, and consistency across the team.
 
@@ -351,7 +351,7 @@ For large projects, I use modular Terraform design and sometimes split state fil
 
 Additionally, before applying changes, I review terraform plan output and maintain state backups/versioning for recovery if anything fails
 ```
-#### how to do state locking?
+### how to do state locking?
 ```
 Terraform state locking is used to prevent multiple users from changing the same infrastructure at the same time.
 
@@ -363,14 +363,14 @@ In AWS, I usually configure remote state using an S3 backend and enable locking 
 Terraform creates a lock entry in DynamoDB before applying changes and removes it after completion.
 This prevents state corruption in team environments.”
 ```
-#### where do we use the terraform workspace ? what is the exact use of it?  
+### where do we use the terraform workspace ? what is the exact use of it?  
 ```
 Terraform workspace is used when we want to deploy the same infrastructure code into different environments such as dev, staging, and production without duplicating code.
 Each workspace maintains its own separate state file, which means resources created in one workspace do not affect another workspace.
 This helps isolate environments while reusing the same Terraform configuration.
 ```
 
-#### you have to env dev and qa and you unfortunately deleted the prod workspace so what will happen now?
+### you have to env dev and qa and you unfortunately deleted the prod workspace so what will happen now?
 ```
 If a Terraform workspace like prod is deleted accidentally, the infrastructure usually still exists in the cloud provider, but Terraform loses direct workspace tracking for that environment.
 The main risk is losing access to the associated state file mapping.
