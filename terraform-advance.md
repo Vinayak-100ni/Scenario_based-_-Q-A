@@ -453,3 +453,21 @@ After validation in non-production environments, I promote the same tested versi
 I also keep a backup of the Terraform state and use version pinning so rollback is possible if required.”
 ```
 
+### what are the cost optimization initiatives you have taken in your current env?
+```
+In my environment, I worked on multiple AWS cost optimization initiatives focused on reducing unused resources and improving utilization.
+
+First, I identified idle or underutilized EC2 instances using monitoring metrics and either rightsized them or scheduled automatic shutdown during non-business hours.
+
+I also moved stable workloads to Reserved Instances or Savings Plans to reduce long-term compute costs.
+
+For storage optimization, I cleaned up unused EBS volumes, old snapshots, and unattached Elastic IPs.
+
+In Kubernetes environments, I optimized node sizing and enabled cluster autoscaling to avoid overprovisioning.
+
+I implemented S3 lifecycle policies to move old data into cheaper storage classes like Glacier.
+
+I also enabled monitoring and tagging strategies to track cost per application, team, or environment.
+
+Additionally, I reviewed load balancer usage, removed unused resources, and optimized logging retention periods to reduce CloudWatch storage costs.
+```
