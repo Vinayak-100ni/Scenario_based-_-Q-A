@@ -1,37 +1,50 @@
-```
+# Kubernetes Deployment and Service for MERN Application
+
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastapi-app
+  name: mern-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: fastapi-app
+      app: mern-app
   template:
     metadata:
       labels:
-        app: fastapi-app
+        app: mern-app
     spec:
       containers:
-      - name: fastapi-app
-        image: your-dockerhub-username/fastapi-app:latest
+      - name: mern-app
+        image: your-dockerhub-username/mern-app:latest
         ports:
-        - containerPort: 8000
-```
-Service
+        - containerPort: 3000
 
-The Service exposes the FastAPI application within the Kubernetes cluster.
-```
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: fastapi-service
+  name: mern-app-service
 spec:
   selector:
-    app: fastapi-app
+    app: mern-app
   ports:
   - port: 80
-    targetPort: 8000
+    targetPort: 3000
   type: ClusterIP
+```
+
+## Deploy
+
+```bash
+kubectl apply -f mern-app.yaml
+```
+
+## Verify
+
+```bash
+kubectl get deployments
+kubectl get pods
+kubectl get services
 ```
