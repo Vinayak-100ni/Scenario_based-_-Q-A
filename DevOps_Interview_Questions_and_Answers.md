@@ -169,17 +169,23 @@ runtime stage to contain only the required binary and runtime
 dependencies. This avoids shipping compilers, caches and build tools.
 
 ``` dockerfile
-FROM golang:1.24 AS build
-WORKDIR /src
-COPY go.mod go.sum ./
-RUN go mod download
+# Stage 1: Build
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN CGO_ENABLED=0 go build -o /out/app ./cmd/app
+RUN npm run build
 
-FROM gcr.io/distroless/static-debian12
-COPY --from=build /out/app /app
-USER nonroot:nonroot
-ENTRYPOINT ["/app"]
+# Stage 2: Production
+FROM node:22-alpine AS production
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --omit=dev
+COPY --from=build /app/dist ./dist
+USER node
+EXPOSE 3000
+CMD ["node", "dist/main.js"]
 ```
 
 **Networking** - `bridge`: common default for containers on one Docker
