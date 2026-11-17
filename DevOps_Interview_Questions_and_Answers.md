@@ -100,26 +100,21 @@ This script checks mounted filesystems, ignores pseudo-filesystems, and
 sends an alert when usage reaches the configured threshold.
 
 ``` bash
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
 
-THRESHOLD="${THRESHOLD:-80}"
-HOST="$(hostname -f 2>/dev/null || hostname)"
-ALERT_EMAIL="${ALERT_EMAIL:-}"
+THRESHOLD=80
 
-while read -r filesystem size used available use_percent mountpoint; do
-  percent="${use_percent%\%}"
+df -h | grep '^/dev' | while read line
+do
+    USAGE=$(echo $line | awk '{print $5}' | sed 's/%//')
+    DISK=$(echo $line | awk '{print $6}')
 
-  if [[ "$percent" =~ ^[0-9]+$ ]] && (( percent >= THRESHOLD )); then
-    message="WARNING: ${HOST}: ${mountpoint} is ${percent}% full (${used} used of ${size})"
-    echo "$message" >&2
-
-    # Configure mailx/sendmail on the host if email alerting is required.
-    if [[ -n "$ALERT_EMAIL" ]] && command -v mail >/dev/null 2>&1; then
-      printf '%s\n' "$message" | mail -s "Disk usage alert: ${HOST}" "$ALERT_EMAIL"
+    if [ "$USAGE" -ge "$THRESHOLD" ]; then
+        echo "WARNING: Disk usage is high on $DISK: $USAGE%"
+    else
+        echo "Disk usage is normal on $DISK: $USAGE%"
     fi
-  fi
-done < <(df -P -x tmpfs -x devtmpfs | awk 'NR > 1')
+done
 ```
 
 Run it with:
