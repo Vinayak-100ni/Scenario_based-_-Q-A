@@ -272,6 +272,19 @@ I first establish impact: whether only Docker management is unavailable
 or whether existing workloads are also affected. I check host health,
 disk space, daemon logs and service status.
 
+### Find the Root Cause
+
+Once I have collected the information, I investigate the cause.
+
+| Problem | What it means | Possible fix |
+|---|---|---|
+| Disk full | Docker cannot write data | Safely identify large files/logs and free space |
+| Memory exhausted | Processes may be killed by OOM (Out of Memory) | Identify memory-heavy processes and assess capacity |
+| Docker configuration error | Invalid daemon configuration | Validate and correct configuration |
+| containerd failure | Container runtime is unhealthy | Investigate containerd logs and service |
+| Storage driver issue | Docker storage backend failing | Investigate overlay/storage errors |
+| Docker upgrade issue | New version has a problem | Investigate upgrade logs and rollback if approved |
+
 ``` bash
 systemctl status docker
 journalctl -u docker --since "30 minutes ago"
